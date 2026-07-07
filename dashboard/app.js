@@ -4,10 +4,24 @@
    ============================================================ */
 
 const ADK_BASE   = '';          // same origin — dashboard served from port 8000
-const APP_NAME   = 'executive_ai';
 const USER_ID    = 'ceo-user';
 
-let sessionId    = null;
+const AGENT_MAP = {
+  'SQL_AGENT': 'sql_agent',
+  'INSIGHT_AGENT': 'insight_agent',
+  'FORECAST_AGENT': 'forecast_agent',
+  'ALERT_AGENT': 'alert_agent',
+  'REPORT_AGENT': 'report_agent'
+};
+
+let sessions = {
+  sql_agent: null,
+  insight_agent: null,
+  forecast_agent: null,
+  alert_agent: null,
+  report_agent: null
+};
+
 let isProcessing = false;
 let selectedAgent = 'SQL_AGENT';
 
@@ -29,18 +43,19 @@ const agentTabs     = document.querySelectorAll('.agent-tab');
 
 // ── Session Management ────────────────────────────────────────
 
-async function createSession() {
+async function createSession(appName) {
   setStatus('connecting');
   try {
     const res = await fetch(
-      `${ADK_BASE}/apps/${APP_NAME}/users/${USER_ID}/sessions`,
+      `${ADK_BASE}/apps/${appName}/users/${USER_ID}/sessions`,
       { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' }
     );
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    sessionId = data.id || data.session_id || data.sessionId;
+    const sessionId = data.id || data.session_id || data.sessionId;
     if (!sessionId) throw new Error('No session ID in response');
-    setStatus('connected', sessionId);
+    sessions[appName] = sessionId;
+    setStatus('connected');
     return sessionId;
   } catch (err) {
     setStatus('error', err.message);
@@ -71,8 +86,16 @@ function setStatus(state, detail) {
 
 async function sendMessage(question) {
   if (isProcessing || !question.trim()) return;
-  if (!sessionId) {
-    try { await createSession(); } catch { return; }
+  
+  const appName = AGENT_MAP[selectedAgent] || 'sql_agent';
+  let activeSessionId = sessions[appName];
+  
+  if (!activeSessionId) {
+    try { 
+      activeSessionId = await createSession(appName); 
+    } catch { 
+      return; 
+    }
   }
 
   isProcessing = true;
@@ -95,12 +118,12 @@ async function sendMessage(question) {
 
   try {
     const body = {
-      app_name: APP_NAME,
+      app_name: appName,
       user_id: USER_ID,
-      session_id: sessionId,
+      session_id: activeSessionId,
       new_message: {
         role: 'user',
-        parts: [{ text: `[${selectedAgent}] ${question}` }]
+        parts: [{ text: question }]
       }
     };
 
@@ -386,8 +409,11 @@ newChatBtn.addEventListener('click', async () => {
   messages.innerHTML = '';
   welcome.style.display = 'flex';
   welcome.style.opacity = '1';
-  sessionId = null;
-  try { await createSession(); } catch(_) {}
+  Object.keys(sessions).forEach(k => sessions[k] = null);
+  try { 
+    const defaultApp = AGENT_MAP[selectedAgent];
+    await createSession(defaultApp); 
+  } catch(_) {}
 });
 
 sidebarToggle.addEventListener('click', () => {
@@ -439,11 +465,12 @@ agentTabs.forEach(tab => {
 
 (async function init() {
   try {
-    await createSession();
+    const defaultApp = AGENT_MAP[selectedAgent];
+    await createSession(defaultApp);
     queryInput.focus();
   } catch (err) {
     console.warn('Could not connect to ADK server:', err.message);
-    appendError('Could not connect to the ExecutiveAI server. Make sure it is running: adk web executive_ai');
+    appendError('Could not connect to the ExecutiveAI server. Make sure it is running: python run_server.py');
     if (welcome) {
       welcome.style.display = 'none';
     }
