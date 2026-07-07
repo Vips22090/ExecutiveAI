@@ -1,7 +1,7 @@
 from google.adk.agents import Agent
 from sql_agent.agent import get_context_tool, run_sql_tool
 
-insight_agent = Agent(
+root_agent = Agent(
     model="gemini-2.0-flash",
     name="insight_agent",
     description=(

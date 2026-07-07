@@ -1,1 +1,1 @@
-from .agent import alert_agent
+from .agent import root_agent as alert_agent

@@ -1,1 +1,1 @@
-from .agent import insight_agent
+from .agent import root_agent as insight_agent

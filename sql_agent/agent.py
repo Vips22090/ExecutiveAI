@@ -141,7 +141,7 @@ def _execute_on_snowflake(sql: str) -> tuple[list[dict], list[str]]:
 get_context_tool = FunctionTool(func=get_context)
 run_sql_tool = FunctionTool(func=run_sql)
 
-sql_agent = Agent(
+root_agent = Agent(
     model="gemini-2.0-flash",
     name="sql_agent",
     description=(

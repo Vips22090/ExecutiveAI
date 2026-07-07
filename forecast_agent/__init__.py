@@ -1,1 +1,1 @@
-from .agent import forecast_agent
+from .agent import root_agent as forecast_agent
