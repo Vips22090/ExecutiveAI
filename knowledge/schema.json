@@ -1,0 +1,988 @@
+{
+  "database": "EXECUTIVE_AI_DB",
+  "schema": "BUSINESS",
+
+  "company": {
+    "name": "ExecutiveAI Demo Company",
+    "industry": "SaaS",
+    "description": "A fictional SaaS company providing subscription-based software to individual and enterprise customers."
+  },
+
+  "tables": {
+
+    "USERS": {
+
+      "purpose": "Stores one record for every registered customer.",
+
+      "business_domain": "Customer",
+
+      "granularity": "One row per registered user",
+
+      "primary_key": "USER_ID",
+
+      "foreign_keys": {},
+
+      "important_columns": [
+        "PLAN",
+        "COUNTRY",
+        "CHANNEL",
+        "PAID",
+        "HEALTH_SCORE",
+        "LTV_USD"
+      ],
+
+      "columns": {
+
+        "USER_ID": {
+          "datatype": "NUMBER",
+          "description": "Unique identifier for each registered customer."
+        },
+
+        "SIGNUP_DATE": {
+          "datatype": "DATE",
+          "description": "Date when the customer registered."
+        },
+
+        "COUNTRY": {
+          "datatype": "VARCHAR",
+          "description": "Customer country."
+        },
+
+        "DEVICE": {
+          "datatype": "VARCHAR",
+          "description": "Primary device used by the customer."
+        },
+
+        "PLAN": {
+          "datatype": "VARCHAR",
+          "description": "Current subscription plan."
+        },
+
+        "CHANNEL": {
+          "datatype": "VARCHAR",
+          "description": "Marketing acquisition channel."
+        },
+
+        "PAID": {
+          "datatype": "BOOLEAN",
+          "description": "Indicates whether the customer is a paid subscriber."
+        },
+
+        "HEALTH_SCORE": {
+          "datatype": "NUMBER",
+          "description": "Customer engagement score between 0 and 100."
+        },
+
+        "LTV_USD": {
+          "datatype": "NUMBER",
+          "description": "Customer lifetime value in USD."
+        }
+
+      },
+
+      "business_questions": [
+
+        "How many users do we have?",
+
+        "How many paid users?",
+
+        "Users by subscription plan",
+
+        "Users by country",
+
+        "Top customers by lifetime value",
+
+        "Customers with low health score"
+
+      ]
+
+    },
+"SESSIONS": {
+
+      "purpose": "Stores every application session initiated by a user.",
+
+      "business_domain": "Product Usage",
+
+      "granularity": "One row per application session",
+
+      "primary_key": "SESSION_ID",
+
+      "foreign_keys": {
+        "USER_ID": "USERS.USER_ID"
+      },
+
+      "important_columns": [
+        "SESSION_DATE",
+        "DURATION_MIN",
+        "PAGES",
+        "CRASHED"
+      ],
+
+      "columns": {
+
+        "SESSION_ID": {
+          "datatype": "NUMBER",
+          "description": "Unique identifier for each application session."
+        },
+
+        "USER_ID": {
+          "datatype": "NUMBER",
+          "description": "Reference to the registered user."
+        },
+
+        "SESSION_DATE": {
+          "datatype": "DATE",
+          "description": "Date when the session occurred."
+        },
+
+        "DURATION_MIN": {
+          "datatype": "NUMBER",
+          "description": "Total session duration in minutes."
+        },
+
+        "PAGES": {
+          "datatype": "NUMBER",
+          "description": "Number of pages or screens viewed during the session."
+        },
+
+        "CRASHED": {
+          "datatype": "BOOLEAN",
+          "description": "Indicates whether the application crashed during the session."
+        }
+
+      },
+
+      "business_questions": [
+
+        "How many sessions occurred today?",
+
+        "What is the average session duration?",
+
+        "Which users have the highest number of sessions?",
+
+        "What is the application crash rate?",
+
+        "How many pages do users view per session?",
+
+        "What are the Daily Active Users (DAU)?",
+
+        "What are the Weekly Active Users (WAU)?",
+
+        "What are the Monthly Active Users (MAU)?"
+
+      ]
+
+    },
+    "FEATURE_USAGE": {
+
+      "purpose": "Tracks every feature used by a customer during an application session.",
+
+      "business_domain": "Product Analytics",
+
+      "granularity": "One row per feature usage event",
+
+      "primary_key": "USAGE_ID",
+
+      "foreign_keys": {
+        "USER_ID": "USERS.USER_ID",
+        "SESSION_ID": "SESSIONS.SESSION_ID"
+      },
+
+      "important_columns": [
+        "FEATURE",
+        "USES",
+        "AI_TOKENS"
+      ],
+
+      "columns": {
+
+        "USAGE_ID": {
+          "datatype": "NUMBER",
+          "description": "Unique identifier for the feature usage event."
+        },
+
+        "USER_ID": {
+          "datatype": "NUMBER",
+          "description": "Reference to the customer who used the feature."
+        },
+
+        "SESSION_ID": {
+          "datatype": "NUMBER",
+          "description": "Reference to the application session."
+        },
+
+        "FEATURE": {
+          "datatype": "VARCHAR",
+          "description": "Name of the feature used by the customer."
+        },
+
+        "USES": {
+          "datatype": "NUMBER",
+          "description": "Number of times the feature was used during the session."
+        },
+
+        "AI_TOKENS": {
+          "datatype": "NUMBER",
+          "description": "Total AI tokens consumed by this feature usage."
+        }
+
+      },
+
+      "business_questions": [
+
+        "Which feature is used the most?",
+
+        "How many times was AI Chat used?",
+
+        "Which users consume the most AI tokens?",
+
+        "What is the total AI token usage?",
+
+        "Which features have the highest adoption?",
+
+        "Which session generated the highest feature usage?",
+
+        "Which customers are the most active feature users?",
+
+        "What are the top 10 most frequently used features?"
+
+      ]
+
+    },
+    "SUBSCRIPTIONS": {
+
+      "purpose": "Stores every subscription lifecycle event including new subscriptions, upgrades, downgrades, renewals, cancellations, and billing.",
+
+      "business_domain": "Subscription",
+
+      "granularity": "One row per subscription event",
+
+      "primary_key": "SUBSCRIPTION_ID",
+
+      "foreign_keys": {
+        "USER_ID": "USERS.USER_ID"
+      },
+
+      "important_columns": [
+        "EVENT_DATE",
+        "EVENT",
+        "PLAN",
+        "AMOUNT"
+      ],
+
+      "columns": {
+
+        "SUBSCRIPTION_ID": {
+          "datatype": "NUMBER",
+          "description": "Unique identifier for the subscription event."
+        },
+
+        "USER_ID": {
+          "datatype": "NUMBER",
+          "description": "Reference to the subscribed customer."
+        },
+
+        "EVENT_DATE": {
+          "datatype": "DATE",
+          "description": "Date when the subscription event occurred."
+        },
+
+        "EVENT": {
+          "datatype": "VARCHAR",
+          "description": "Type of subscription event such as New, Upgrade, Downgrade, Renewal or Cancel."
+        },
+
+        "PLAN": {
+          "datatype": "VARCHAR",
+          "description": "Subscription plan after the event."
+        },
+
+        "AMOUNT": {
+          "datatype": "NUMBER(10,2)",
+          "description": "Revenue amount associated with the subscription event."
+        }
+
+      },
+
+      "business_questions": [
+
+        "What is our Monthly Recurring Revenue?",
+
+        "What is our Annual Recurring Revenue?",
+
+        "How much revenue did each plan generate?",
+
+        "How many upgrades occurred this month?",
+
+        "How many downgrades occurred this month?",
+
+        "How many cancellations occurred?",
+
+        "Which subscription plan is the most popular?",
+
+        "What is the monthly subscription growth?",
+
+        "What is the average subscription value?",
+
+        "Who are the highest paying customers?"
+
+      ]
+
+    },
+    "MARKETING_CAMPAIGNS": {
+
+      "purpose": "Stores marketing campaign performance metrics used to measure customer acquisition, conversion, and advertising effectiveness.",
+
+      "business_domain": "Marketing",
+
+      "granularity": "One row per campaign per reporting month",
+
+      "primary_key": "CAMPAIGN_ID",
+
+      "foreign_keys": {},
+
+      "important_columns": [
+        "CAMPAIGN",
+        "CHANNEL",
+        "MONTH",
+        "BUDGET",
+        "INSTALLS",
+        "CUSTOMERS",
+        "ROAS"
+      ],
+
+      "columns": {
+
+        "CAMPAIGN_ID": {
+          "datatype": "NUMBER",
+          "description": "Unique identifier for the marketing campaign."
+        },
+
+        "CAMPAIGN": {
+          "datatype": "VARCHAR",
+          "description": "Marketing campaign name."
+        },
+
+        "CHANNEL": {
+          "datatype": "VARCHAR",
+          "description": "Advertising platform or acquisition channel."
+        },
+
+        "MONTH": {
+          "datatype": "VARCHAR",
+          "description": "Reporting month for campaign performance."
+        },
+
+        "BUDGET": {
+          "datatype": "NUMBER(10,2)",
+          "description": "Marketing budget allocated to the campaign."
+        },
+
+        "INSTALLS": {
+          "datatype": "NUMBER",
+          "description": "Total application installs generated by the campaign."
+        },
+
+        "CUSTOMERS": {
+          "datatype": "NUMBER",
+          "description": "Number of customers acquired through the campaign."
+        },
+
+        "ROAS": {
+          "datatype": "NUMBER(10,2)",
+          "description": "Return On Ad Spend for the campaign."
+        }
+
+      },
+
+      "business_questions": [
+
+        "Which campaign generated the highest ROAS?",
+
+        "Which marketing channel acquired the most customers?",
+
+        "How much marketing budget was spent this month?",
+
+        "Which campaign generated the most installs?",
+
+        "Which campaign has the highest conversion rate?",
+
+        "What is the Customer Acquisition Cost (CAC)?",
+
+        "Which channel delivers the best ROI?",
+
+        "How many customers were acquired through each campaign?",
+
+        "Show monthly marketing performance.",
+
+        "Compare campaign performance by channel."
+
+      ]
+
+    },
+    "ENTERPRISE_ACCOUNTS": {
+
+      "purpose": "Stores information about enterprise customers including company profile, industry, purchased licenses, and overall account health.",
+
+      "business_domain": "Enterprise Sales",
+
+      "granularity": "One row per enterprise customer",
+
+      "primary_key": "ACCOUNT_ID",
+
+      "foreign_keys": {},
+
+      "important_columns": [
+        "COMPANY",
+        "INDUSTRY",
+        "SEATS",
+        "HEALTH"
+      ],
+
+      "columns": {
+
+        "ACCOUNT_ID": {
+          "datatype": "NUMBER",
+          "description": "Unique identifier for the enterprise account."
+        },
+
+        "COMPANY": {
+          "datatype": "VARCHAR",
+          "description": "Enterprise customer name."
+        },
+
+        "INDUSTRY": {
+          "datatype": "VARCHAR",
+          "description": "Industry to which the customer belongs."
+        },
+
+        "SEATS": {
+          "datatype": "NUMBER",
+          "description": "Number of software licenses purchased."
+        },
+
+        "HEALTH": {
+          "datatype": "VARCHAR",
+          "description": "Overall customer health status such as Healthy, At Risk, or Critical."
+        }
+
+      },
+
+      "business_questions": [
+
+        "How many enterprise customers do we have?",
+
+        "Which industry has the highest number of enterprise customers?",
+
+        "Which enterprise customers purchased the most seats?",
+
+        "How many licenses have been sold?",
+
+        "Which customers are marked as At Risk?",
+
+        "Show enterprise customers by industry.",
+
+        "What is the average number of seats per customer?",
+
+        "Which enterprise customer has the largest deployment?",
+
+        "How many Healthy vs At Risk customers do we have?",
+
+        "List all enterprise customers."
+
+      ]
+
+    },
+    "SALES_PIPELINE": {
+
+      "purpose": "Stores enterprise sales opportunities from lead creation to deal closure, including deal stage, owner, and contract value.",
+
+      "business_domain": "Sales",
+
+      "granularity": "One row per sales opportunity",
+
+      "primary_key": "DEAL_ID",
+
+      "foreign_keys": {
+        "ACCOUNT_ID": "ENTERPRISE_ACCOUNTS.ACCOUNT_ID"
+      },
+
+      "important_columns": [
+        "STAGE",
+        "OWNER",
+        "ACV"
+      ],
+
+      "columns": {
+
+        "DEAL_ID": {
+          "datatype": "NUMBER",
+          "description": "Unique identifier for the sales opportunity."
+        },
+
+        "ACCOUNT_ID": {
+          "datatype": "NUMBER",
+          "description": "Reference to the enterprise customer."
+        },
+
+        "STAGE": {
+          "datatype": "VARCHAR",
+          "description": "Current stage of the sales opportunity such as Prospecting, Qualification, Proposal, Negotiation, Closed Won, or Closed Lost."
+        },
+
+        "OWNER": {
+          "datatype": "VARCHAR",
+          "description": "Sales representative responsible for the opportunity."
+        },
+
+        "ACV": {
+          "datatype": "NUMBER(12,2)",
+          "description": "Annual Contract Value of the sales opportunity."
+        }
+
+      },
+
+      "business_questions": [
+
+        "What is the total sales pipeline value?",
+
+        "What is the pipeline value by stage?",
+
+        "Which sales representative owns the largest pipeline?",
+
+        "What is the average Annual Contract Value?",
+
+        "How many deals are currently in negotiation?",
+
+        "Which deals have the highest contract value?",
+
+        "Show pipeline by sales representative.",
+
+        "Show pipeline by enterprise customer.",
+
+        "Which sales stage has the highest number of opportunities?",
+
+        "What is the expected annual revenue from the pipeline?"
+
+      ]
+
+    },
+
+    "SUPPORT_TICKETS": {
+
+      "purpose": "Stores customer support requests, issue categories, priorities, resolution metrics, and customer satisfaction scores.",
+
+      "business_domain": "Customer Support",
+
+      "granularity": "One row per support ticket",
+
+      "primary_key": "TICKET_ID",
+
+      "foreign_keys": {
+        "USER_ID": "USERS.USER_ID",
+        "LINKED_RELEASE": "PRODUCT_RELEASES.VERSION"
+      },
+
+      "important_columns": [
+        "OPENED",
+        "CATEGORY",
+        "PRIORITY",
+        "LINKED_RELEASE",
+        "RESOLUTION_HOURS",
+        "CSAT"
+      ],
+
+      "columns": {
+
+        "TICKET_ID": {
+          "datatype": "NUMBER",
+          "description": "Unique identifier for each support ticket."
+        },
+
+        "USER_ID": {
+          "datatype": "NUMBER",
+          "description": "Reference to the customer who raised the ticket."
+        },
+
+        "OPENED": {
+          "datatype": "DATE",
+          "description": "Date when the support ticket was created."
+        },
+
+        "CATEGORY": {
+          "datatype": "VARCHAR",
+          "description": "Issue category such as Billing, Login, Performance, AI, or Bug."
+        },
+
+        "PRIORITY": {
+          "datatype": "VARCHAR",
+          "description": "Business priority of the ticket such as Low, Medium, High, or Critical."
+        },
+
+        "LINKED_RELEASE": {
+          "datatype": "VARCHAR",
+          "description": "Product release or version associated with the reported issue."
+        },
+
+        "RESOLUTION_HOURS": {
+          "datatype": "NUMBER",
+          "description": "Total time taken to resolve the support ticket in hours."
+        },
+
+        "CSAT": {
+          "datatype": "NUMBER",
+          "description": "Customer Satisfaction score provided after ticket resolution."
+        }
+
+      },
+
+      "business_questions": [
+
+        "How many support tickets were created this month?",
+
+        "What is the average resolution time?",
+
+        "What is the average CSAT score?",
+
+        "Which issue category has the most tickets?",
+
+        "How many high priority tickets are currently open?",
+
+        "Which product release generated the most support tickets?",
+
+        "Show tickets by priority.",
+
+        "Show tickets by category.",
+
+        "Which customers raised the most support tickets?",
+
+        "What is the customer satisfaction trend over time?"
+
+      ]
+
+    },
+    "SUPPORT_TICKETS": {
+
+      "purpose": "Stores customer support requests, issue categories, priorities, resolution metrics, and customer satisfaction scores.",
+
+      "business_domain": "Customer Support",
+
+      "granularity": "One row per support ticket",
+
+      "primary_key": "TICKET_ID",
+
+      "foreign_keys": {
+        "USER_ID": "USERS.USER_ID",
+        "LINKED_RELEASE": "PRODUCT_RELEASES.VERSION"
+      },
+
+      "important_columns": [
+        "OPENED",
+        "CATEGORY",
+        "PRIORITY",
+        "LINKED_RELEASE",
+        "RESOLUTION_HOURS",
+        "CSAT"
+      ],
+
+      "columns": {
+
+        "TICKET_ID": {
+          "datatype": "NUMBER",
+          "description": "Unique identifier for each support ticket."
+        },
+
+        "USER_ID": {
+          "datatype": "NUMBER",
+          "description": "Reference to the customer who raised the ticket."
+        },
+
+        "OPENED": {
+          "datatype": "DATE",
+          "description": "Date when the support ticket was created."
+        },
+
+        "CATEGORY": {
+          "datatype": "VARCHAR",
+          "description": "Issue category such as Billing, Login, Performance, AI, or Bug."
+        },
+
+        "PRIORITY": {
+          "datatype": "VARCHAR",
+          "description": "Business priority of the ticket such as Low, Medium, High, or Critical."
+        },
+
+        "LINKED_RELEASE": {
+          "datatype": "VARCHAR",
+          "description": "Product release or version associated with the reported issue."
+        },
+
+        "RESOLUTION_HOURS": {
+          "datatype": "NUMBER",
+          "description": "Total time taken to resolve the support ticket in hours."
+        },
+
+        "CSAT": {
+          "datatype": "NUMBER",
+          "description": "Customer Satisfaction score provided after ticket resolution."
+        }
+
+      },
+
+      "business_questions": [
+
+        "How many support tickets were created this month?",
+
+        "What is the average resolution time?",
+
+        "What is the average CSAT score?",
+
+        "Which issue category has the most tickets?",
+
+        "How many high priority tickets are currently open?",
+
+        "Which product release generated the most support tickets?",
+
+        "Show tickets by priority.",
+
+        "Show tickets by category.",
+
+        "Which customers raised the most support tickets?",
+
+        "What is the customer satisfaction trend over time?"
+
+      ]
+
+    },
+
+
+    "AI_REQUESTS": {
+
+      "purpose": "Stores every AI request made by customers, including the model used, prompt category, token consumption, and estimated processing cost.",
+
+      "business_domain": "Artificial Intelligence",
+
+      "granularity": "One row per AI request",
+
+      "primary_key": "REQUEST_ID",
+
+      "foreign_keys": {
+        "USER_ID": "USERS.USER_ID"
+      },
+
+      "important_columns": [
+        "REQUEST_DATE",
+        "MODEL",
+        "PROMPT_TYPE",
+        "TOKENS",
+        "COST_USD"
+      ],
+
+      "columns": {
+
+        "REQUEST_ID": {
+          "datatype": "NUMBER",
+          "description": "Unique identifier for the AI request."
+        },
+
+        "USER_ID": {
+          "datatype": "NUMBER",
+          "description": "Reference to the customer making the AI request."
+        },
+
+        "REQUEST_DATE": {
+          "datatype": "DATE",
+          "description": "Date when the AI request was submitted."
+        },
+
+        "MODEL": {
+          "datatype": "VARCHAR",
+          "description": "AI model used to process the request."
+        },
+
+        "PROMPT_TYPE": {
+          "datatype": "VARCHAR",
+          "description": "Category of prompt such as Chat, Summarization, Translation, Code Generation, or Analytics."
+        },
+
+        "TOKENS": {
+          "datatype": "NUMBER",
+          "description": "Total tokens consumed by the request."
+        },
+
+        "COST_USD": {
+          "datatype": "NUMBER(10,4)",
+          "description": "Estimated processing cost of the AI request in USD."
+        }
+
+      },
+
+      "business_questions": [
+
+        "How many AI requests were processed?",
+
+        "What is the total AI processing cost?",
+
+        "How many AI tokens were consumed?",
+
+        "Which AI model is used the most?",
+
+        "Which prompt type is most common?",
+
+        "Which customers consume the most AI tokens?",
+
+        "Show AI cost by month.",
+
+        "Show token consumption by model.",
+
+        "Which prompt category generates the highest cost?",
+
+        "What is the average cost per AI request?"
+
+      ]
+
+    },
+    "FINANCE_TRANSACTIONS": {
+
+      "purpose": "Stores all financial transactions including revenue and expenses used for financial reporting and profitability analysis.",
+
+      "business_domain": "Finance",
+
+      "granularity": "One row per financial transaction",
+
+      "primary_key": "TXN_ID",
+
+      "foreign_keys": {},
+
+      "important_columns": [
+        "DATE",
+        "TYPE",
+        "CATEGORY",
+        "AMOUNT"
+      ],
+
+      "columns": {
+
+        "TXN_ID": {
+          "datatype": "NUMBER",
+          "description": "Unique identifier for the financial transaction."
+        },
+
+        "DATE": {
+          "datatype": "DATE",
+          "description": "Transaction date."
+        },
+
+        "TYPE": {
+          "datatype": "VARCHAR",
+          "description": "Transaction type such as Revenue or Expense."
+        },
+
+        "CATEGORY": {
+          "datatype": "VARCHAR",
+          "description": "Financial category such as Subscription, Enterprise Sales, Marketing, Infrastructure, Support, or AI."
+        },
+
+        "AMOUNT": {
+          "datatype": "NUMBER(12,2)",
+          "description": "Transaction amount in USD."
+        }
+
+      },
+
+      "business_questions": [
+
+        "What is the total revenue?",
+
+        "What are the total expenses?",
+
+        "What is the monthly revenue trend?",
+
+        "Show revenue by category.",
+
+        "Show expenses by category.",
+
+        "Which category generates the highest revenue?",
+
+        "What is the total AI spending?",
+
+        "Compare revenue versus expenses.",
+
+        "Show financial transactions by month.",
+
+        "What is the average transaction value?"
+
+      ]
+
+    },
+    "PRODUCT_RELEASES": {
+
+      "purpose": "Stores product release history including software versions, release dates, major features, and known issues. This table helps correlate customer support trends with product releases.",
+
+      "business_domain": "Engineering",
+
+      "granularity": "One row per product release",
+
+      "primary_key": "VERSION",
+
+      "foreign_keys": {},
+
+      "important_columns": [
+        "RELEASE_DATE",
+        "FEATURE",
+        "ISSUE"
+      ],
+
+      "columns": {
+
+        "VERSION": {
+          "datatype": "VARCHAR",
+          "description": "Unique software version identifier."
+        },
+
+        "RELEASE_DATE": {
+          "datatype": "DATE",
+          "description": "Date when the product version was released."
+        },
+
+        "FEATURE": {
+          "datatype": "VARCHAR",
+          "description": "Major feature or enhancement introduced in the release."
+        },
+
+        "ISSUE": {
+          "datatype": "VARCHAR",
+          "description": "Known issue associated with the release. 'None' indicates no known issues."
+        }
+
+      },
+
+      "business_questions": [
+
+        "What is the latest product release?",
+
+        "Which features were released this month?",
+
+        "Show the product release timeline.",
+
+        "Which release introduced AI Dashboard?",
+
+        "Which release generated the most support tickets?",
+
+        "Show releases with known issues.",
+
+        "How many releases were deployed this year?",
+
+        "What features were introduced in each version?",
+
+        "Which release had the highest customer impact?",
+
+        "List all product versions."
+
+      ]
+
+    }
+
+  }
+
+}

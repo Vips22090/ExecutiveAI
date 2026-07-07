@@ -1,0 +1,595 @@
+{
+  "examples": [
+
+    {
+      "intent": "Monthly Recurring Revenue",
+
+      "kpi": "MRR",
+
+      "tables": [
+        "SUBSCRIPTIONS"
+      ],
+
+      "business_goal": "Analyze recurring subscription revenue over time.",
+
+      "questions": [
+
+        "Show monthly recurring revenue",
+
+        "Show MRR",
+
+        "Monthly revenue",
+
+        "Revenue trend",
+
+        "Subscription revenue",
+
+        "Revenue by month",
+
+        "How much recurring revenue did we generate?",
+
+        "Show revenue trend",
+
+        "Monthly subscription revenue",
+
+        "Revenue over time"
+
+      ]
+
+    },
+
+    {
+      "intent": "Annual Recurring Revenue",
+
+      "kpi": "ARR",
+
+      "tables": [
+        "SUBSCRIPTIONS"
+      ],
+
+      "business_goal": "Estimate annual recurring subscription revenue.",
+
+      "questions": [
+
+        "Show ARR",
+
+        "Annual recurring revenue",
+
+        "Yearly subscription revenue",
+
+        "Annual revenue",
+
+        "Projected annual revenue"
+
+      ]
+
+    },
+
+    {
+      "intent": "Top Customers",
+
+      "kpi": "LTV",
+
+      "tables": [
+        "USERS"
+      ],
+
+      "business_goal": "Identify the most valuable customers.",
+
+      "questions": [
+
+        "Top customers",
+
+        "Highest lifetime value customers",
+
+        "Customers by revenue",
+
+        "Who are our best customers?",
+
+        "Show customers with highest LTV",
+
+        "Top paying customers",
+
+        "Largest customers"
+
+      ]
+
+    },
+
+    {
+      "intent": "Revenue by Subscription Plan",
+
+      "kpi": "MRR",
+
+      "tables": [
+        "SUBSCRIPTIONS"
+      ],
+
+      "business_goal": "Compare subscription revenue across plans.",
+
+      "questions": [
+
+        "Revenue by plan",
+
+        "Which subscription plan generates the most revenue?",
+
+        "Compare plans",
+
+        "Revenue by subscription",
+
+        "Highest revenue plan"
+
+      ]
+
+    },
+
+    {
+      "intent": "Revenue Growth",
+
+      "kpi": "MRR",
+
+      "tables": [
+        "SUBSCRIPTIONS"
+      ],
+
+      "business_goal": "Measure revenue growth over time.",
+
+      "questions": [
+
+        "Revenue growth",
+
+        "Monthly growth",
+
+        "Growth trend",
+
+        "How is revenue changing?",
+
+        "Compare revenue month over month"
+
+      ]
+
+    },
+    {
+      "intent": "Daily Active Users",
+
+      "kpi": "DAU",
+
+      "tables": [
+        "SESSIONS"
+      ],
+
+      "business_goal": "Measure daily user engagement.",
+
+      "questions": [
+
+        "Show daily active users",
+
+        "Show DAU",
+
+        "Users active today",
+
+        "How many users logged in today?",
+
+        "Daily user activity",
+
+        "Today's active users"
+
+      ]
+
+    },
+
+    {
+      "intent": "Monthly Active Users",
+
+      "kpi": "MAU",
+
+      "tables": [
+        "SESSIONS"
+      ],
+
+      "business_goal": "Measure monthly user engagement.",
+
+      "questions": [
+
+        "Show monthly active users",
+
+        "Show MAU",
+
+        "Users active this month",
+
+        "Monthly user activity",
+
+        "Monthly engagement"
+
+      ]
+
+    },
+
+    {
+      "intent": "Weekly Active Users",
+
+      "kpi": "WAU",
+
+      "tables": [
+        "SESSIONS"
+      ],
+
+      "business_goal": "Measure weekly user engagement.",
+
+      "questions": [
+
+        "Show weekly active users",
+
+        "Show WAU",
+
+        "Weekly engagement",
+
+        "Users active this week"
+
+      ]
+
+    },
+
+    {
+      "intent": "Average Session Duration",
+
+      "kpi": "AVG_SESSION_DURATION",
+
+      "tables": [
+        "SESSIONS"
+      ],
+
+      "business_goal": "Measure customer engagement by average session duration.",
+
+      "questions": [
+
+        "Average session duration",
+
+        "Average user session",
+
+        "How long do users stay?",
+
+        "Average time spent",
+
+        "Session duration trend",
+
+        "Time spent in application"
+
+      ]
+
+    },
+
+    {
+      "intent": "Feature Adoption",
+
+      "kpi": "FEATURE_ADOPTION",
+
+      "tables": [
+        "FEATURE_USAGE"
+      ],
+
+      "business_goal": "Measure product feature adoption and popularity.",
+
+      "questions": [
+
+        "Most used feature",
+
+        "Feature usage",
+
+        "Feature adoption",
+
+        "Top product features",
+
+        "Which feature is most popular?",
+
+        "Which feature is used the most?",
+
+        "Feature usage trend"
+
+      ]
+
+    },
+
+    {
+      "intent": "Application Stability",
+
+      "kpi": "CRASH_RATE",
+
+      "tables": [
+        "SESSIONS"
+      ],
+
+      "business_goal": "Measure application reliability.",
+
+      "questions": [
+
+        "Crash rate",
+
+        "Application crash rate",
+
+        "App stability",
+
+        "How often does the app crash?",
+
+        "Crash trend",
+
+        "Application health"
+
+      ]
+
+    },
+
+    {
+      "intent": "AI Cost",
+
+      "kpi": "AI_COST",
+
+      "tables": [
+        "AI_REQUESTS"
+      ],
+
+      "business_goal": "Monitor AI infrastructure cost.",
+
+      "questions": [
+
+        "Show AI cost",
+
+        "AI spending",
+
+        "Monthly AI cost",
+
+        "LLM cost",
+
+        "Model cost",
+
+        "How much do we spend on AI?",
+
+        "AI cost trend"
+
+      ]
+
+    },
+
+    {
+      "intent": "AI Token Usage",
+
+      "kpi": "AI_TOKENS",
+
+      "tables": [
+        "AI_REQUESTS"
+      ],
+
+      "business_goal": "Monitor AI token consumption.",
+
+      "questions": [
+
+        "AI token usage",
+
+        "Token consumption",
+
+        "LLM tokens",
+
+        "Show token usage",
+
+        "How many tokens were consumed?",
+
+        "Monthly token trend"
+
+      ]
+
+    },
+    {
+      "intent": "Marketing Performance",
+
+      "kpi": "ROAS",
+
+      "tables": [
+        "MARKETING_CAMPAIGNS"
+      ],
+
+      "business_goal": "Evaluate marketing campaign effectiveness and return on investment.",
+
+      "questions": [
+
+        "Which campaign has the highest ROAS?",
+
+        "Best marketing campaign",
+
+        "Marketing ROI",
+
+        "Campaign performance",
+
+        "Show ROAS by campaign",
+
+        "Compare marketing channels",
+
+        "Best performing channel"
+
+      ]
+
+    },
+
+    {
+      "intent": "Customer Acquisition Cost",
+
+      "kpi": "CAC",
+
+      "tables": [
+        "MARKETING_CAMPAIGNS"
+      ],
+
+      "business_goal": "Monitor customer acquisition efficiency.",
+
+      "questions": [
+
+        "Customer acquisition cost",
+
+        "Show CAC",
+
+        "Average acquisition cost",
+
+        "Marketing acquisition cost",
+
+        "How much does it cost to acquire one customer?"
+
+      ]
+
+    },
+
+    {
+      "intent": "Enterprise Revenue",
+
+      "kpi": "ENTERPRISE_REVENUE",
+
+      "tables": [
+        "SALES_PIPELINE",
+        "ENTERPRISE_ACCOUNTS"
+      ],
+
+      "business_goal": "Analyze enterprise sales performance.",
+
+      "questions": [
+
+        "Enterprise revenue",
+
+        "Revenue from enterprise customers",
+
+        "Pipeline value",
+
+        "Enterprise sales",
+
+        "Annual contract value",
+
+        "Show enterprise pipeline"
+
+      ]
+
+    },
+
+    {
+      "intent": "Customer Satisfaction",
+
+      "kpi": "CSAT",
+
+      "tables": [
+        "SUPPORT_TICKETS"
+      ],
+
+      "business_goal": "Measure customer satisfaction and support quality.",
+
+      "questions": [
+
+        "Average CSAT",
+
+        "Customer satisfaction",
+
+        "Support satisfaction",
+
+        "Customer feedback",
+
+        "Support rating",
+
+        "CSAT trend"
+
+      ]
+
+    },
+
+    {
+      "intent": "Support Performance",
+
+      "kpi": "CSAT",
+
+      "tables": [
+        "SUPPORT_TICKETS"
+      ],
+
+      "business_goal": "Analyze support operations and issue resolution.",
+
+      "questions": [
+
+        "Average resolution time",
+
+        "Support tickets by category",
+
+        "High priority tickets",
+
+        "Open tickets",
+
+        "Support workload",
+
+        "Ticket trend"
+
+      ]
+
+    },
+
+    {
+      "intent": "Financial Performance",
+
+      "kpi": "FINANCIAL_SUMMARY",
+
+      "tables": [
+        "FINANCE_TRANSACTIONS"
+      ],
+
+      "business_goal": "Monitor overall company financial performance.",
+
+      "questions": [
+
+        "Total revenue",
+
+        "Total expenses",
+
+        "Revenue vs expenses",
+
+        "Financial summary",
+
+        "Revenue by category",
+
+        "Expense trend",
+
+        "Monthly financial performance"
+
+      ]
+
+    },
+
+    {
+      "intent": "Executive Business Overview",
+
+      "kpi": "BUSINESS_OVERVIEW",
+
+      "tables": [
+        "USERS",
+        "SUBSCRIPTIONS",
+        "MARKETING_CAMPAIGNS",
+        "SALES_PIPELINE",
+        "SUPPORT_TICKETS",
+        "AI_REQUESTS"
+      ],
+
+      "business_goal": "Provide an executive summary of overall business performance.",
+
+      "questions": [
+
+        "Give me an executive summary",
+
+        "Business overview",
+
+        "Overall company performance",
+
+        "Executive dashboard",
+
+        "Summarize business performance",
+
+        "CEO report",
+
+        "How is the business performing?"
+
+      ]
+
+    }
+
+  ]
+}

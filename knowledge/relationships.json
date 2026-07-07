@@ -1,0 +1,95 @@
+{
+  "relationships": [
+
+    {
+      "from_table": "USERS",
+      "from_column": "USER_ID",
+      "to_table": "SESSIONS",
+      "to_column": "USER_ID",
+      "relationship": "ONE_TO_MANY",
+      "join_condition": "USERS.USER_ID = SESSIONS.USER_ID",
+      "description": "One user can have many application sessions."
+    },
+
+    {
+      "from_table": "USERS",
+      "from_column": "USER_ID",
+      "to_table": "FEATURE_USAGE",
+      "to_column": "USER_ID",
+      "relationship": "ONE_TO_MANY",
+      "join_condition": "USERS.USER_ID = FEATURE_USAGE.USER_ID",
+      "description": "One user can generate many feature usage events."
+    },
+
+    {
+      "from_table": "SESSIONS",
+      "from_column": "SESSION_ID",
+      "to_table": "FEATURE_USAGE",
+      "to_column": "SESSION_ID",
+      "relationship": "ONE_TO_MANY",
+      "join_condition": "SESSIONS.SESSION_ID = FEATURE_USAGE.SESSION_ID",
+      "description": "One application session can contain multiple feature usage events."
+    },
+
+    {
+      "from_table": "USERS",
+      "from_column": "USER_ID",
+      "to_table": "SUBSCRIPTIONS",
+      "to_column": "USER_ID",
+      "relationship": "ONE_TO_MANY",
+      "join_condition": "USERS.USER_ID = SUBSCRIPTIONS.USER_ID",
+      "description": "One user can have multiple subscription events."
+    },
+
+    {
+      "from_table": "USERS",
+      "from_column": "USER_ID",
+      "to_table": "SUPPORT_TICKETS",
+      "to_column": "USER_ID",
+      "relationship": "ONE_TO_MANY",
+      "join_condition": "USERS.USER_ID = SUPPORT_TICKETS.USER_ID",
+      "description": "One user can raise multiple support tickets."
+    },
+
+    {
+      "from_table": "USERS",
+      "from_column": "USER_ID",
+      "to_table": "AI_REQUESTS",
+      "to_column": "USER_ID",
+      "relationship": "ONE_TO_MANY",
+      "join_condition": "USERS.USER_ID = AI_REQUESTS.USER_ID",
+      "description": "One user can generate multiple AI requests."
+    },
+
+    {
+      "from_table": "ENTERPRISE_ACCOUNTS",
+      "from_column": "ACCOUNT_ID",
+      "to_table": "SALES_PIPELINE",
+      "to_column": "ACCOUNT_ID",
+      "relationship": "ONE_TO_MANY",
+      "join_condition": "ENTERPRISE_ACCOUNTS.ACCOUNT_ID = SALES_PIPELINE.ACCOUNT_ID",
+      "description": "One enterprise customer can have multiple sales opportunities."
+    },
+
+    {
+      "from_table": "PRODUCT_RELEASES",
+      "from_column": "VERSION",
+      "to_table": "SUPPORT_TICKETS",
+      "to_column": "LINKED_RELEASE",
+      "relationship": "ONE_TO_MANY",
+      "join_condition": "PRODUCT_RELEASES.VERSION = SUPPORT_TICKETS.LINKED_RELEASE",
+      "description": "A product release can be associated with multiple support tickets."
+    },
+
+    {
+      "from_table": "MARKETING_CAMPAIGNS",
+      "from_column": "CHANNEL",
+      "to_table": "USERS",
+      "to_column": "CHANNEL",
+      "relationship": "LOGICAL",
+      "join_condition": "MARKETING_CAMPAIGNS.CHANNEL = USERS.CHANNEL",
+      "description": "Users are attributed to the marketing channel through which they were acquired."
+    }
+
+  ]
+}
